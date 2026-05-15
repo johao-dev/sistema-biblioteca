@@ -3,7 +3,15 @@ package com.universidadxyz.sistemabiblioteca.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+/**
+ * Entidad Prestamo.
+ * @Cacheable + @Cache(READ_WRITE): Los préstamos cambian de estado frecuentemente
+ *             (ACTIVO → DEVUELTO). READ_WRITE garantiza que el caché se invalide
+ *             correctamente cuando se registra una devolución.
+ */
 @Entity
 @Table(name = "prestamos")
 @Getter
@@ -11,6 +19,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "prestamos")
 public class Prestamo {
 
     @Id

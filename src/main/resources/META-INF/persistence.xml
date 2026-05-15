@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+  <persistence-unit name="BibliotecaPU" transaction-type="JTA">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <jta-data-source>jdbc/biblioteca_xyz</jta-data-source>
+    <class>com.universidadxyz.sistemabiblioteca.entity.Usuario</class>
+    <class>com.universidadxyz.sistemabiblioteca.entity.Libro</class>
+    <class>com.universidadxyz.sistemabiblioteca.entity.Prestamo</class>
+    <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+    <properties>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.transaction.coordinator_class" value="jta"/>
 
-    <persistence-unit name="BibliotecaPU" transaction-type="RESOURCE_LOCAL">
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.universidadxyz.sistemabiblioteca.entity.Usuario</class>
-        <class>com.universidadxyz.sistemabiblioteca.entity.Libro</class>
-        <class>com.universidadxyz.sistemabiblioteca.entity.Prestamo</class>
-
-        <properties>
-            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
-            <property name="jakarta.persistence.jdbc.url"
-                value="jdbc:mysql://localhost:3306/biblioteca_xyz?serverTimezone=UTC&amp;useSSL=false&amp;allowPublicKeyRetrieval=true" />
-
-            <!-- Configuración de conexión a la base de datos -->
-            <property name="jakarta.persistence.jdbc.user" value="notzuzz" />
-            <property name="jakarta.persistence.jdbc.password" value="zuzz1212M@_" />
-            <property name="hibernate.connection.provider_class"
-                value="org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl" />
-
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
-            <property name="hibernate.hbm2ddl.auto" value="update" />
-            <property name="hibernate.show_sql" value="true" />
-        </properties>
-    </persistence-unit>
+    <property name="hibernate.transaction.jta.platform"
+              value="org.hibernate.engine.transaction.jta.platform.internal.SunOneJtaPlatform"/>
+      <!-- ================================================= -->
+      <!-- CONFIGURACIÓN DE CACHÉ DE SEGUNDO NIVEL (AXEL)    -->
+      <!-- ================================================= -->
+      <!-- Habilita el caché de segundo nivel en Hibernate -->
+      <property name"hibernate.cache.use_second_level_cache" value="true"/>
+      <!-- Habilita el caché de consultas (para resultados de JPQL) -->
+      <property name="hibernate.cache.use_query_cache" value="true"/>
+      <!-- Proveedor JCache que delega a Ehcache 3 en el classpath -->
+      <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.jcache.internal.JCacheRegionFactory"/>
+      <property name="hibernate.javax.cache.provider" value="org.ehcache.jsr107.EhcacheCachingProvider"/>
+      <!-- Muestra estadísticas de caché en los logs del servidor -->
+      <property name="hibernate.generate_statistics" value="true"/>
+    </properties>
+  </persistence-unit>
 </persistence>
+=
