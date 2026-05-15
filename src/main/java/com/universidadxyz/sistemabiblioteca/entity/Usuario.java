@@ -17,7 +17,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+/**
+ * Entidad Usuario.
+ * @Cacheable: Habilita el caché de segundo nivel para esta entidad.
+ * @Cache(READ_WRITE): Los usuarios pueden ser activados/desactivados, por lo que
+ *                     READ_WRITE garantiza consistencia al actualizar el caché.
+ */
 @Entity
 @Table(name = "usuarios")
 @Getter
@@ -25,6 +32,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@jakarta.persistence.Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "usuarios")
 public class Usuario {
 
     @Id
