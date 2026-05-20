@@ -49,4 +49,12 @@ public class LibroService {
 
         return respuesta;
     }
+
+    public void guardarLibro(Libro libro) {
+        libroRepository.save(libro);
+    }
+
+    public List<Libro> obtenerTodos() {
+        return libroRepository.findAllOrdenadoPorTitulo();
+    }
 }
