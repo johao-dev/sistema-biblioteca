@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Registro de Libros</title>
+    <h:outputStylesheet library="css" name="estilos.css"/>
+</h:head>
+
+<h:body>
+
+<div class="contenedor">
+
+    <h1>Registro de Libros</h1>
+    <h:form id="formLibro">
+
+        <h:messages globalOnly="true"
+                     styleClass="mensaje"/>
+
+        <div class="campo">
+            <h:outputLabel value="Título:" for="titulo"/>
+
+            <h:inputText id="titulo"
+                         value="#{libroBean.libro.titulo}"
+                         required="true"
+                         requiredMessage="El título es obligatorio"
+                         styleClass="input"/>
+
+            <h:message for="titulo" styleClass="error"/>
+        </div>
+        <div class="campo">
+            <h:outputLabel value="Autor:" for="autor"/>
+
+            <h:inputText id="autor"
+                         value="#{libroBean.libro.autor}"
+                         required="true"
+                         requiredMessage="El autor es obligatorio"
+                         styleClass="input"/>
+
+            <h:message for="autor" styleClass="error"/>
+        </div>
+
+        <div class="campo">
+            <h:outputLabel value="ISBN:" for="isbn"/>
+
+            <h:inputText id="isbn"
+                         value="#{libroBean.libro.isbn}"
+                         required="true"
+                         requiredMessage="El ISBN es obligatorio"
+                         styleClass="input"/>
+
+            <h:message for="isbn" styleClass="error"/>
+        </div>
+
+        <div class="campo">
+            <h:outputLabel value="Stock:" for="stock"/>
+            <h:inputText id="stock"
+                         value="#{libroBean.libro.cantidadEjemplares}"
+                         required="true"
+                         validatorMessage="Solo números"
+                         styleClass="input">
+
+                <f:validateLongRange minimum="1"/>
+
+            </h:inputText>
+
+            <h:message for="stock" styleClass="error"/>
+        </div>
+
+        <h:commandButton value="Guardar"
+                         action="#{libroBean.guardar()}"
+                         styleClass="boton"/>
+        <br/><br/>
+
+        <h:button value="Volver"
+                  outcome="menu.xhtml"
+                  styleClass="botonSecundario"/>
+
+    </h:form>
+
+    <h:dataTable value="#{libroBean.librosRegistrados}" var="lib" styleClass="tabla-registros" rendered="#{not empty libroBean.librosRegistrados}">
+        <h:column>
+            <f:facet name="header">ID</f:facet>
+            #{lib.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">ISBN</f:facet>
+            #{lib.isbn}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Título</f:facet>
+            #{lib.titulo}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Autor</f:facet>
+            #{lib.autor}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Stock</f:facet>
+            #{lib.cantidadEjemplares}
+        </h:column>
+    </h:dataTable>
+
+</div>
+
+</h:body>
+</html>

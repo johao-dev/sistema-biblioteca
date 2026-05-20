@@ -34,4 +34,13 @@ public class LibroRepository {
         queryActivos.setParameter("estado", Prestamo.Estado.ACTIVO);
         return queryActivos.getSingleResult();
     }
+
+    @jakarta.transaction.Transactional
+    public void save(Libro libro) {
+        if (libro.getId() == null) {
+            em.persist(libro);
+        } else {
+            em.merge(libro);
+        }
+    }
 }

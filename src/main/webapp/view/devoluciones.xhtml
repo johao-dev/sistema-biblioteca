@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Devoluciones</title>
+    <h:outputStylesheet library="css" name="estilos.css"/>
+</h:head>
+
+<h:body>
+
+<div class="contenedor">
+
+    <h1>Devolución de Libros</h1>
+
+    <h:form id="formDevolucion">
+
+        <h:messages globalOnly="true" styleClass="mensaje"/>
+        <div class="campo">
+            <h:outputLabel value="Código Préstamo:" for="codigo"/>
+
+            <h:inputText id="codigo"
+                         value="#{prestamoBean.prestamoId}"
+                         required="true"
+                         requiredMessage="Ingrese código"
+                         styleClass="input"/>
+
+            <h:message for="codigo" styleClass="error"/>
+        </div>
+
+        <h:commandButton value="Devolver"
+                         action="#{prestamoBean.registrarDevolucion()}"
+                         styleClass="boton"/>
+
+        <br/><br/>
+         <h:button value="Volver"
+                   outcome="menu.xhtml"
+                   styleClass="botonSecundario"/>
+
+    </h:form>
+
+    <h:dataTable value="#{prestamoBean.todosPrestamos}" var="prestamo" styleClass="tabla-registros" rendered="#{not empty prestamoBean.todosPrestamos}">
+        <h:column>
+            <f:facet name="header">ID</f:facet>
+            #{prestamo.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Alumno</f:facet>
+            #{prestamo.usuario.nombre}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Libro</f:facet>
+            #{prestamo.libro.titulo}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Fecha Devolución</f:facet>
+            <h:outputText value="#{prestamo.fechaDevolucionEsperada}">
+                <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Estado</f:facet>
+            <span class="badge badge-#{prestamo.estado.toString().toLowerCase()}">
+                #{prestamo.estado}
+            </span>
+        </h:column>
+    </h:dataTable>
+
+</div>
+
+</h:body>
+</html>

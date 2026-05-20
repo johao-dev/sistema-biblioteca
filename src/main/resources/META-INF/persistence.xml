@@ -12,14 +12,12 @@
       <property name="hibernate.hbm2ddl.auto" value="update"/>
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.transaction.coordinator_class" value="jta"/>
-
-    <property name="hibernate.transaction.jta.platform"
-              value="org.hibernate.engine.transaction.jta.platform.internal.SunOneJtaPlatform"/>
+      <property name="hibernate.transaction.jta.platform" value="org.hibernate.engine.transaction.jta.platform.internal.SunOneJtaPlatform"/>
       <!-- ================================================= -->
       <!-- CONFIGURACIÓN DE CACHÉ DE SEGUNDO NIVEL (AXEL)    -->
       <!-- ================================================= -->
       <!-- Habilita el caché de segundo nivel en Hibernate -->
-      <property name"hibernate.cache.use_second_level_cache" value="true"/>
+      <property name="hibernate.cache.use_second_level_cache" value="true"/>
       <!-- Habilita el caché de consultas (para resultados de JPQL) -->
       <property name="hibernate.cache.use_query_cache" value="true"/>
       <!-- Proveedor JCache que delega a Ehcache 3 en el classpath -->
@@ -30,4 +28,3 @@
     </properties>
   </persistence-unit>
 </persistence>
-=
